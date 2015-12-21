@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Karma Deduce</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/myCSS.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Karma Deduce</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="welcome.html">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <!--homepage-->
+    <div id="homepage">
+
+        <div class="bs-docs-header" id="content" tabindex="-1">
+            <h1>命格测试</h1>
+            <p>这是一个算命网站，可以分别从以下三个方面进行命格测试：</p>
+            <ul>
+                <li>事业（或学业）</li>
+                <li>健康</li>
+                <li>人际交往</li>
+            </ul>
+            <p>推算的理论依据来源于中国佛法论里的十业道果。
+                如果想要了解“十业道果”的理论，这里有一个十业道果可视化的网站(Visualization of Karma Relationships , Vis-Karma)，点击下面的链接前往：</p>
+            <p>
+            <a class="btn btn-lg btn-default" href="http://www.yalibian.com/vis/karma/" role="button">View Vis-Karma &raquo;</a>
+            </p>
+        </div>
+
+        <!--<div class="container">-->
+
+            <!--&lt;!&ndash; Main component for a primary marketing message or call to action &ndash;&gt;-->
+            <!--<div class="jumbotron font-microblack">-->
+                <!--<h1>命格测试</h1>-->
+                <!--<p>这是一个算命网站，可以分别从以下三个方面进行命格测试：</p>-->
+                <!--<ul>-->
+                    <!--<strong>-->
+                    <!--<li>事业（或学业）</li>-->
+                    <!--<li>健康</li>-->
+                    <!--<li>人际交往</li>-->
+                    <!--</strong>-->
+                <!--</ul>-->
+                <!--<p>推算的理论依据来源于中国佛法论里的十业道果。</p>-->
+                <!--<p>如果想要了解“十业道果”的理论，这里有一个十业道果可视化的网站(Visualization of Karma Relationships , Vis-Karma)，点击下面的链接前往：</p>-->
+                <!--<p>-->
+                    <!--<a class="btn btn-lg btn-primary" href="http://www.yalibian.com/vis/karma/" role="button">View Vis-Karma &raquo;</a>-->
+                <!--</p>-->
+            <!--</div>-->
+
+        <!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+
+        <div class="container marketing">
+
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <!-- business panel  -->
+                <div class="col-lg-4  panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-circle" src="image/business.jpg" alt="Generic placeholder image" width="140" height="140">
+                        <h2>事业</h2>
+                        <p><button class="btn btn-lg btn-primary" id="goBusiness">开始测试 &raquo;</button></p>
+                    </div><!-- /.panel-body-->
+                </div><!-- /.col-md-3 -->
+                <!-- health panel  -->
+                <div class="col-lg-4  panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-circle" src="image/health.jpg" alt="Generic placeholder image" width="140" height="140">
+                        <h2>健康</h2>
+                        <p><button class="btn btn-lg btn-primary" id="goHealth">开始测试 &raquo;</button></p>
+                    </div><!-- /.panel-body-->
+                </div><!-- /.col-md-3 -->
+                <!-- Interpersonal relationship panel  -->
+                <div class="col-lg-4  panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-circle" src="image/Interpersonal_relationship.jpg" alt="Generic placeholder image" width="140" height="140">
+                        <h2>人际交往</h2>
+                        <p><button class="btn btn-lg btn-primary" id="goRelationship">开始测试 &raquo;</button></p>
+                    </div><!-- /.panel-body-->
+                </div><!-- /.col-md-3 -->
+
+
+            </div><!-- /.row -->
+        </div> <!-- /.container marketing -->
+
+    </div><!-- /.homepage -->
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <p>© 2015 ZJU, Sherine</p>
+    </footer>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!--my ajax &#45;&#45; replace homepage-->
+    <script src="js/goSubpage.js"></script>
+
+
+
+</body>
+</html>
