@@ -3,6 +3,8 @@
  */
 
 var item_factor = new Array();
+var item_positive = new Array();
+var item_negative = new Array();
 $(document).ready(function(){
     $.getJSON("data/karma.json",function(data){
         $.each(data.health ,function( i , item ){
@@ -26,6 +28,8 @@ $(document).ready(function(){
             );
             //debugger;
             item_factor[i] = item.factor;
+            item_positive[i] = item.positive;
+            item_negative[i] = item.negative;
             //console.log(item_factor[i]);
         });
 

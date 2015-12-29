@@ -2,6 +2,8 @@
  * Created by Sherine on 2015/12/13.
  */
 
+//bubble json object
+var newBubbleObj = new Object();
 //add action to progress bar
 $(document).ready(function(){
     var percentage = 0;
@@ -29,6 +31,8 @@ $(document).ready(function(){
             var select_result = new Array();
             var good_factor = new Array();
             var bad_factor = new Array();
+            var positive_children = new Array();
+            var negative_children = new Array();
             //debugger;
             var index_good = 0;
             var index_bad = 0;
@@ -37,24 +41,31 @@ $(document).ready(function(){
                 select_result[index] = $("input[name = " + radio_name + "]:checked").val(); //get the each radio's value
 
                 if(select_result[index]=='Y'){
-                    good_factor[index_good] = item_factor[index];
+                    good_factor[index_good] = item_factor[index];//获取善业的因
+                    positive_children[index_good] = item_positive[index];//获取善业的名称
                     index_good ++;
                 }
                 else{
-                    bad_factor[index_bad] = item_factor[index];
+                    bad_factor[index_bad] = item_factor[index];// 获取恶业的因
+                    negative_children[index_bad] = item_negative[index];  //获取恶业的名称
                     index_bad ++;
                 }
                 index++;
             }
-            //console.log(select_result[index-1]);
-            //console.log(item_factor[index-1]);
+            /*console.log("neg_child:"+negative_text);
+            console.log("pos_child:"+positive_text);*/
 
+            newBubbleObj.name = "bubble";
+            newBubbleObj.children = new Array();
+            newBubbleObj.children[0] = new Object();
+            newBubbleObj.children[0].name = "善业";
+            newBubbleObj.children[0].children = positive_children;
+            newBubbleObj.children[1] = new Object();
+            newBubbleObj.children[1].name = "恶业";
+            newBubbleObj.children[1].children = negative_children;
+            var newBubbletext= JSON.stringify(newBubbleObj);
 
-
-            //$("#subPage").load("result.html",function(responseTxt,statusTxt,xhr){
-            //    if(statusTxt=="error")
-            //        alert("Error: "+xhr.status+": "+xhr.statusText);
-            //});
+            console.log("newBubbletext:"+newBubbletext);
             $("#subPage").remove();
 
             $("#homepage").append("<div class='container'><div class='panel panel-primary center-block'>" +
@@ -63,6 +74,16 @@ $(document).ready(function(){
                 "</div>" +
                 "</div></div> ");
 
+            var bubble_page = "<div class='center-block' id='mainBubble'> " +
+                //    "<svg class='mainBubbleSVG'>" +
+                //"<text style='fill: rgb(136, 136, 136);' alignment-baseline='middle' dominant-baseline='middle' font-size='12' y='398.44' x='10' id='bubbleItemNote'>"+
+                //" </text></svg>" +
+                "</div>";
+            $("#subPage").append(bubble_page);
+            //$("#bubble_page").load("result.html",function(responseTxt,statusTxt,xhr){
+            //    if(statusTxt=="error")
+            //        alert("Error: "+xhr.status+": "+xhr.statusText);
+            //});
 
             //var good_content = "<div class='col-lg-6 panel panel-primary' id='good_content'></div>";
             var good_content = "<div class='col-lg-6'>" +
