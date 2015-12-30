@@ -87,12 +87,12 @@ $(document).ready(function(){
 
             //var good_content = "<div class='col-lg-6 panel panel-primary' id='good_content'></div>";
             var good_content = "<div class='col-lg-6'>" +
-                                "<div class='font-microblack' id='title'><span class='label label-success'>Success</span>" +
+                                "<div class='font-microblack' id='title'><span class='label label-primary'>Success</span>" +
                                 "<strong>您得到如今的果，是因为您在以下方面做得比较好:</strong></div>" +
                 "<div class='list-group' id='good_content'></div></div>";
             //var bad_content = "<div class='col-lg-6 panel panel-primary' id='bad_content'></div>";
             var bad_content = "<div class='col-lg-6'>" +
-                "<div class='font-microblack' id='title'><span class='label label-danger'>Advise</span>" +
+                "<div class='font-microblack' id='title'><span class='label label-warning'>Advise</span>" +
                 "<strong>您在一些方面做得不够好，我们给您提出如下建议:</strong></div>" +
                 "<div class='list-group' id='bad_content'></div></div>";
 
@@ -100,12 +100,12 @@ $(document).ready(function(){
             $("#subPage").append(good_content);
 
             for(var i=0;i<good_factor.length;i++){
-                $("#good_content").append("<li class='list-group-item list-group-item-success'>"+good_factor[i]+"</li>");
+                $("#good_content").append("<li class='list-group-item list-group-item-info' id='good-list-" + i + "' >" + good_factor[i]+"</li>");
             }
 
             $("#subPage").append(bad_content);
             for(var i=0;i<bad_factor.length;i++){
-                $("#bad_content").append("<li class='list-group-item list-group-item-danger'>"+bad_factor[i]+"</li>");
+                $("#bad_content").append("<li class='list-group-item list-group-item-warning' id='bad-list-" + i + "' >"+bad_factor[i]+"</li>");
             }
 
 

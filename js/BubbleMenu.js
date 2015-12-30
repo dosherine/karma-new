@@ -2,8 +2,9 @@
 
 //submit action
 $("#submit_button").click(function () {
-    var w = window.innerWidth * 0.68 * 0.95;
-    var h = Math.ceil(w / 3 * 2);
+    //var w = window.innerWidth * 0.68 * 0.95;
+    var w = window.innerWidth;
+    var h = Math.ceil(window.innerWidth * 0.68 * 0.95 / 3 * 2);
     var oR = 0;
     var nTop = 0;
     var svgContainer = d3.select("#mainBubble")
@@ -39,13 +40,15 @@ $("#submit_button").click(function () {
             return "topBubbleAndText_" + i
         });
 
-    //console.log(root);
-    //nTop = root.children.length;  //children's length
-    //sherine's code
-    nTop = root.children.length  ;  //make the children's length from 2 to 4, so that reduce the size of top bubble
-
+    nTop = root.children.length;  //children's length
     //oR = w / (1 + 3 * nTop);
-    oR = w / (2 + 3 * nTop);  //top bubble's radius
+    oR = 3 * w / 40;  //top bubble's radius
+
+
+    function countObj_cx(i){  //function : count the x of BubbleObj
+        //return oR * (3 * (1 + i) - 1);
+        return oR * (5 *  i + 2) ;
+    }
 
     //h = Math.ceil(w / (nTop+1) * 2);
     svgContainer.style("height", h + "px");
@@ -61,24 +64,34 @@ $("#submit_button").click(function () {
             return oR;
         })
         .attr("cx", function (d, i) {
-            return oR * (3 * (1 + i) - 1);
+            //return oR * (3 * (1 + i) - 1);
+            return countObj_cx(i);
         })
-        .attr("cy", (h + oR) / 3)
+        //.attr("cy", (h + oR) / 3)
+        .attr("cy", (h - oR) / 2)
         .style("fill", function (d, i) {
             return colVals(i);
         }) // #1f77b4
         .style("opacity", 0.3)
         .on("mouseover", function (d, i) {
+            d3.select(this)
+                .style("opacity", 0.5);
             return activateBubble(d, i);
-        });
+        })
+        .on("mouseleave",function(d,i){
+            d3.select(this).style("opacity", 0.3);
+        })
+    ;
 
 
     bubbleObj.append("text")
         .attr("class", "topBubbleText")
         .attr("x", function (d, i) {
-            return oR * (3 * (1 + i) - 1);
+            //return oR * (3 * (1 + i) - 1);
+            return countObj_cx(i);
         })
-        .attr("y", (h + oR) / 3)
+        //.attr("y", (h + oR) / 3)
+        .attr("y", (h - oR) / 2)
         .style("fill", function (d, i) {
             return colVals(i);
         }) // #1f77b4
@@ -93,8 +106,10 @@ $("#submit_button").click(function () {
             return activateBubble(d, i);
         });
 
-
-    for (var iB = 0; iB < nTop; iB++) {
+    addchildren(0,"#good-list-","list-group-item list-group-item-danger","list-group-item list-group-item-info");
+    addchildren(1,"#bad-list-","list-group-item list-group-item-danger","list-group-item list-group-item-warning");
+    //for (var iB = 0; iB < nTop; iB++) {
+    function addchildren(iB , list_name, new_class, original_class){
         var childBubbles = svg.selectAll(".childBubble" + iB)
             .data(root.children[iB].children)
             .enter().append("g");
@@ -110,10 +125,12 @@ $("#submit_button").click(function () {
                 return oR / 3.0;
             })
             .attr("cx", function (d, i) {
-                return (oR * (3 * (iB + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                //return (oR * (3 * (iB + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                return countObj_cx(iB) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
             })
             .attr("cy", function (d, i) {
-                return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                //return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                return ((h - oR) / 2 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
             })
             .attr("cursor", "pointer")
             .style("opacity", 0.5)
@@ -135,15 +152,32 @@ $("#submit_button").click(function () {
             .text(function (d) {
                 return d.address;
             })*/
+            .on("mouseover", function (d, i) {
+                //console.log("mousevoer");
+                $( list_name + i)
+                    .removeClass()
+                    .addClass(new_class);
+                d3.select(this)
+                    .style("fill","#ebcccc");
+            })
+            .on("mouseleave",function(d,i){
+                $(list_name + i)
+                    .removeClass()
+                    .addClass(original_class);
+                d3.select(this)
+                    .style("fill","#eee");
+            })
         ;
 
         childBubbles.append("text")
             .attr("class", "childBubbleText" + iB)
             .attr("x", function (d, i) {
-                return (oR * (3 * (iB + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                //return (oR * (3 * (iB + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                return countObj_cx(iB) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
             })
             .attr("y", function (d, i) {
-                return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                return ((h - oR) / 2 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                //return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
             })
             .style("opacity", 0.5)
             .attr("text-anchor", "middle")
@@ -161,17 +195,28 @@ $("#submit_button").click(function () {
             /*.on("click", function (d, i) {
                 window.open(d.address);
             })*/
+            .on("mouseover", function (d, i) {
+                //console.log("mousevoer");
+                $( list_name + i)
+                    .removeClass()
+                    .addClass(new_class);
+            })
+            .on("mouseleave",function(d,i){
+                $(list_name + i)
+                    .removeClass()
+                    .addClass(original_class);
+            })
         ;
 
     }
 
 
     resetBubbles = function () {
-        w = window.innerWidth * 0.68 * 0.95;
+        //w = window.innerWidth * 0.68 * 0.95;
         //oR = w / (1 + 3 * nTop);
 
         //h = Math.ceil(w / (nTop+1) * 2);
-        svgContainer.style("height", h + "px");
+        //svgContainer.style("height", h + "px");
 
         //mainNote.attr("y", h - 15);
 
@@ -188,24 +233,29 @@ $("#submit_button").click(function () {
                 return oR;
             })
             .attr("cx", function (d, i) {
-                return oR * (3 * (1 + i) - 1);
+                //return oR * (3 * (1 + i) - 1);
+                return countObj_cx(i);
             })
-            .attr("cy", (h + oR) / 3);
-
+            //.attr("cy", (h + oR) / 3);
+            .attr("cy", (h - oR) / 2);
         t.selectAll(".topBubbleText")
             .attr("font-size", 30)
             .attr("x", function (d, i) {
-                return oR * (3 * (1 + i) - 1);
+                return countObj_cx(i);
+                //return oR * (3 * (1 + i) - 1);
             })
-            .attr("y", (h + oR) / 3);
+            //.attr("y", (h + oR) / 3);
+            .attr("y", (h - oR) / 2);
 
         for (var k = 0; k < nTop; k++) {
             t.selectAll(".childBubbleText" + k)
                 .attr("x", function (d, i) {
-                    return (oR * (3 * (k + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    //return (oR * (3 * (k + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    return countObj_cx(k) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
                 })
                 .attr("y", function (d, i) {
-                    return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    //return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    return ((h - oR) / 2 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
                 })
                 .attr("font-size", 6)
                 .style("opacity", 0.5);
@@ -216,10 +266,12 @@ $("#submit_button").click(function () {
                 })
                 .style("opacity", 0.5)
                 .attr("cx", function (d, i) {
-                    return (oR * (3 * (k + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    //return (oR * (3 * (k + 1) - 1) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    return countObj_cx(k) + oR * 1.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
                 })
                 .attr("cy", function (d, i) {
-                    return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    //return ((h + oR) / 3 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    return ((h - oR) / 2 + oR * 1.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
                 });
 
         }
@@ -235,15 +287,18 @@ $("#submit_button").click(function () {
             .attr("cx", function (d, ii) {
                 if (i == ii) {
                     // Nothing to change
-                    return oR * (3 * (1 + ii) - 1) - 0.6 * oR * (ii - 1);
+                    //return oR * (3 * (1 + ii) - 1) - 0.6 * oR * (ii - 1);
+                    return countObj_cx(ii);
                 } else {
                     // Push away a little bit
                     if (ii < i) {
                         // left side
-                        return oR * 0.6 * (3 * (1 + ii) - 1);
+                        //return oR * 0.6 * (3 * (1 + ii) - 1);
+                        return countObj_cx(ii) * 0.6;
                     } else {
                         // right side
-                        return oR * (nTop * 3 + 1) - oR * 0.6 * (3 * (nTop - ii) - 1);
+                        //return oR * (nTop * 3 + 1) - oR * 0.6 * (3 * (nTop - ii) - 1);
+                        return countObj_cx(ii) + oR * 0.6 * (3 * (nTop - ii) - 1);
                     }
                 }
             })
@@ -258,15 +313,20 @@ $("#submit_button").click(function () {
             .attr("x", function (d, ii) {
                 if (i == ii) {
                     // Nothing to change
-                    return oR * (3 * (1 + ii) - 1) - 0.6 * oR * (ii - 1);
+                    //return oR * (3 * (1 + ii) - 1) - 0.6 * oR * (ii - 1);
+                    return countObj_cx(ii);
                 } else {
                     // Push away a little bit
                     if (ii < i) {
                         // left side
-                        return oR * 0.6 * (3 * (1 + ii) - 1);
+                        //这个元素在active元素的左边
+                        //return oR * 0.6 * (3 * (1 + ii) - 1);
+                        return countObj_cx(ii) * 0.6;
                     } else {
                         // right side
-                        return oR * (nTop * 3 + 1) - oR * 0.6 * (3 * (nTop - ii) - 1);
+                        //这个元素在active元素的右边
+                        //return oR * (nTop * 3 + 1) - oR * 0.6 * (3 * (nTop - ii) - 1);
+                        return countObj_cx(ii) + oR * 0.6 * (3 * (nTop - ii) - 1);
                     }
                 }
             })
@@ -283,10 +343,12 @@ $("#submit_button").click(function () {
             if (k < nTop / 2) signSide = 1;
             t.selectAll(".childBubbleText" + k)
                 .attr("x", function (d, i) {
-                    return (oR * (3 * (k + 1) - 1) - 0.6 * oR * (k - 1) + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    //return (oR * (3 * (k + 1) - 1) - 0.6 * oR * (k - 1) + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    return countObj_cx(k) + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
                 })
                 .attr("y", function (d, i) {
-                    return ((h + oR) / 3 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    //return ((h + oR) / 3 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    return ((h - oR) / 2 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
                 })
                 .attr("font-size", function () {
                     return (k == i) ? 12 : 6;
@@ -297,10 +359,12 @@ $("#submit_button").click(function () {
 
             t.selectAll(".childBubble" + k)
                 .attr("cx", function (d, i) {
-                    return (oR * (3 * (k + 1) - 1) - 0.6 * oR * (k - 1) + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    //return (oR * (3 * (k + 1) - 1) - 0.6 * oR * (k - 1) + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926));
+                    return countObj_cx(k)  + signSide * oR * 2.5 * Math.cos((i - 1) * 45 / 180 * 3.1415926);
                 })
                 .attr("cy", function (d, i) {
-                    return ((h + oR) / 3 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    //return ((h + oR) / 3 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
+                    return ((h - oR) / 2 + signSide * oR * 2.5 * Math.sin((i - 1) * 45 / 180 * 3.1415926));
                 })
                 .attr("r", function () {
                     return (k == i) ? (oR * 0.55) : (oR / 3.0);
